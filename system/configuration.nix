@@ -19,8 +19,6 @@ in
     [
       # Window manager
       ./wm/xmonad.nix
-      # Binary cache
-      ./cachix.nix
     ];
 
   networking = {
@@ -50,8 +48,11 @@ in
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     firejail
-    vim
+    git
+    curl
+    htop
     wget
+    zsh
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -60,6 +61,12 @@ in
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = true;
+  };
+
+  programs.neovim = {
+    enable = true;
+    viAlias = true;
+    vimAlias = true;
   };
 
   # List services that you want to enable:
@@ -151,23 +158,15 @@ in
     myfonts.icomoon-feather
   ];
 
-  programs.fish.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.gvolpe = {
+  users.users.vinothkr = {
     isNormalUser = true;
     extraGroups = [ "docker" "networkmanager" "wheel" "scanner" "lp" ]; # wheel for ‘sudo’.
     shell = pkgs.fish;
   };
 
   security = {
-    # Yubikey login & sudo
-    pam.yubico = {
-      enable = true;
-      debug = false;
-      mode = "challenge-response";
-    };
-
     # Sudo custom prompt message
     sudo.configFile = ''
       Defaults lecture=always
@@ -200,7 +199,7 @@ in
       auto-optimise-store = true;
 
       # Required by Cachix to be used as non-root user
-      trusted-users = [ "root" "gvolpe" ];
+      trusted-users = [ "root" "vinothkr" ];
 
       experimental-features = [ "nix-command" "flakes" ];
 

@@ -19,13 +19,8 @@
   };
 
   networking = {
-    hostName = "dell-xps-15-9560";
+    hostName = "vinothkr-laptop";
     interfaces.wlp2s0.useDHCP = true;
-  };
-
-  fileSystems."/data" = {
-    device = "/dev/nvme0n1p3";
-    fsType = "ext4";
   };
 
   services.xserver = {
@@ -39,12 +34,13 @@
       }
       { output = "eDP-1";
         monitorConfig = ''
-          Option "PreferredMode" "3840x2160"
+          Option "PreferredMode" "1366x768"
           Option "Position" "0 0"
         '';
       }
     ];
     resolutions = [
+      { x = 1366; y = 768 ; }
       { x = 2048; y = 1152; }
       { x = 1920; y = 1080; }
       { x = 2560; y = 1440; }
